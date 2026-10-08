@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>和歌山市子 AR パネル</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+      background: #1a0f16;
+      color: #ffe8f0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,140,180,0.3);
+      border-radius: 24px;
+      padding: 2rem 1.5rem;
+      max-width: 460px;
+      width: 100%;
+    }
+    h1 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-align: center;
+      background: linear-gradient(135deg, #ff8fb8, #c77dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.2rem;
+    }
+    .subtitle { text-align: center; font-size: 0.8rem; color: #a78; margin-bottom: 1.2rem; }
+
+    /* rel="ar" のリンクは最初の子要素が <img> である必要がある（Safari の仕様） */
+    .preview {
+      display: block;
+      margin: 0 auto 1.2rem;
+      border-radius: 16px;
+      background:
+        repeating-conic-gradient(rgba(255,255,255,0.06) 0 25%, transparent 0 50%) 0 0 / 24px 24px;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .preview img { display: block; width: 100%; max-height: 52vh; object-fit: contain; }
+
+    .ar-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; background: linear-gradient(135deg, #e0567f, #9b5de5);
+      color: white; text-decoration: none; font-size: 1.1rem; font-weight: 600;
+      padding: 1rem; border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(255,100,160,0.35);
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.15s;
+    }
+    .ar-btn:active { transform: scale(0.97); }
+
+    .howto {
+      margin-top: 1.2rem;
+      background: rgba(0,0,0,0.25); border-radius: 14px;
+      padding: 0.9rem 1rem;
+      font-size: 0.82rem; line-height: 1.7; color: #dbb;
+      list-style: none;
+    }
+    .howto b { color: #fff; font-weight: 600; }
+    .status { text-align: center; font-size: 0.75rem; color: #c88; margin-top: 0.8rem; min-height: 1em; }
+    .badge { text-align: center; font-size: 0.7rem; color: #645; margin-top: 0.6rem; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <h1>和歌山市子 AR パネル</h1>
+  <p class="subtitle">等身大パネル（キャラ身長 160cm）をARで設置</p>
+
+  <a class="preview" rel="ar" href="ichiko.usdz">
+    <img src="ichiko.png" alt="和歌山市子">
+  </a>
+
+  <a class="ar-btn" rel="ar" href="ichiko.usdz">
+    <img src="" alt="" style="display:none" width="0" height="0">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+      <path d="M2 17l10 5 10-5"/>
+      <path d="M2 12l10 5 10-5"/>
+    </svg>
+    <span>ARで見る</span>
+  </a>
+
+  <ul class="howto">
+    <li><b>設置</b>：iPadを床に向けてゆっくり動かすと、床に置かれます</li>
+    <li><b>移動</b>：パネルを指1本で押さえたままドラッグ</li>
+    <li><b>大きさ</b>：2本指でピンチイン／アウト</li>
+    <li><b>向き</b>：2本指でひねる（回転）</li>
+    <li><b>原寸</b>：ピンチ中に100%付近で軽く吸着します（キャラ身長 160cm）</li>
+  </ul>
+
+  <p id="status" class="status"></p>
+  <p class="badge">iPad / iPhone の Safari（AR Quick Look）対応</p>
+</div>
+
+<script>
+// AR Quick Look が使えない環境（PC・Android など）では案内を表示
+const a = document.createElement('a');
+if (!(a.relList && a.relList.supports && a.relList.supports('ar'))) {
+  document.getElementById('status').textContent =
+    'この端末はAR Quick Lookに対応していません。iPad / iPhone の Safari で開いてください。';
+}
+</script>
+</body>
+</html>
